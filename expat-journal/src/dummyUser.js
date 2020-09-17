@@ -1,10 +1,16 @@
 const user = {
-	Authentication: "token",
+	token: "testToken",
 	credentials: {
-		firstname: "testfirst",
-		lastname: "testlast",
-		email: "test@test.com",
-		password: "testpass",
+		signin: {
+			email: "test@test.com",
+			password: "testpass",
+		},
+		signup: {
+			firstname: "testfirst",
+			lastname: "testlast",
+			email: "test@test.com",
+			password: "testpass",
+		},
 	},
 	data: {
 		photos: [],

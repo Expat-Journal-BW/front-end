@@ -163,7 +163,7 @@ export default function SignUp() {
 				</form>
 			</div>
 			<Box mt={5}>
-				<Copyright text="Use My Tech Stuff" />
+				<Copyright linkText="Use My Tech Stuff" />
 			</Box>
 		</Container>
 	);

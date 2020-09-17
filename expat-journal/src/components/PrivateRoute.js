@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import { fakeAuth } from "../hooks/axiosWithAuth";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
 	return (
@@ -9,7 +10,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 				return localStorage.getItem("token") ? (
 					<Component {...props} />
 				) : (
-					<Redirect to="/" />
+					<Redirect to="/signin" />
 				);
 			}}
 		/>
