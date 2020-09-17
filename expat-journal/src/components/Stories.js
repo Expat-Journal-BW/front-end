@@ -43,3 +43,5 @@ class Stories extends React.Component{
 
 
 }
+
+export default Stories;
