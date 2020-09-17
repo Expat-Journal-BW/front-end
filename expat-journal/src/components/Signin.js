@@ -68,7 +68,10 @@ function SignIn(props) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const userCredMatch = props.user.credentials.signin;
+		//This is where the user's credentials are being
+		//compared to the sign in form's state
+		//using props.user.credentials.signin as a placeholder
+		const userCredMatch = props.user.credentials.signin; //Can adjust later
 		let signInCreds = {
 			email: email,
 			password: password,
