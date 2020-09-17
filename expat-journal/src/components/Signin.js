@@ -94,7 +94,7 @@ function SignIn(props) {
 	};
 
 	if (fakeAuth.isAuthenticated) {
-		return <Redirect to="/dashboard" />;
+		return <Redirect to="/userdashboard" />;
 	}
 	return (
 		<Container component="main" maxWidth="xs">
@@ -169,7 +169,7 @@ function SignIn(props) {
 				</form>
 			</div>
 			<Box mt={8}>
-				<Copyright text="Expat Journal" />
+				<Copyright linkText="Expat Journal" />
 			</Box>
 		</Container>
 	);

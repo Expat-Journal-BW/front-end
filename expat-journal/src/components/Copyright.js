@@ -7,7 +7,7 @@ function Copyright(props) {
 		<Typography variant="body2" color="textSecondary" align="center">
 			{"Copyright © "}
 			<Link color="inherit" href="https://material-ui.com/">
-				{props.text}
+				{props.linkText}
 			</Link>{" "}
 			{new Date().getFullYear()}
 			{"."}

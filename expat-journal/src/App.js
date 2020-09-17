@@ -28,7 +28,7 @@ export default function App() {
 			</nav>
 			<Route exact path="/signup" component={Signup} />
 			<Route exact path="/signin" component={Signin} />
-			<PrivateRoute path="/dashboard" component={Dashboard} />
+			<PrivateRoute path="/userdashboard" component={Dashboard} />
 		</div>
 	);
 }

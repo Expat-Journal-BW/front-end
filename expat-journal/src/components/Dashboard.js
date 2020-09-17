@@ -1,15 +1,47 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { fakeAuth } from "../hooks/axiosWithAuth";
 
 const Dashboard = (props) => {
-	const [state, setState] = useState({});
+	console.log("Dashboard props:", props);
+	const [logout, setLogout] = useState(false);
+
+	const handleSignOut = (e) => {
+		//e.preventDefault();
+		fakeAuth.signout(() => {
+			setTimeout(() => {
+				window.alert("Signed out!");
+				localStorage.clear();
+				setLogout(true);
+			}, 500);
+		});
+	};
+
+	if (!fakeAuth.isAuthenticated) {
+		return <Redirect to="/signin" />;
+	}
 
 	return (
 		<div>
 			<div>
+				<button
+					onClick={(e) => {
+						handleSignOut(e);
+					}}
+				>
+					Sign Out
+				</button>
 				<h2>Dashboard!</h2>
 			</div>
 		</div>
 	);
 };
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+	return {
+		user: state.user,
+	};
+};
+
+export default connect(mapStateToProps)(Dashboard);
