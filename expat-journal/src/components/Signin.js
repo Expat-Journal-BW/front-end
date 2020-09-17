@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -16,6 +18,7 @@ import Container from "@material-ui/core/Container";
 import Copyright from "./Copyright";
 
 import { useInput } from "../hooks/useInput";
+import { fakeAuth } from "../hooks/axiosWithAuth";
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -37,9 +40,27 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function SignIn() {
+const shallowEqual = (object1, object2) => {
+	const keys1 = Object.keys(object1);
+	const keys2 = Object.keys(object2);
+
+	if (keys1.length !== keys2.length) {
+		return false;
+	}
+
+	for (let key of keys1) {
+		if (object1[key] !== object2[key]) {
+			return false;
+		}
+	}
+
+	return true;
+};
+
+function SignIn(props) {
 	const classes = useStyles();
 
+	const [loggedIn, setLoggedIn] = useState(false);
 	const [remembered, setRemembered] = useState(false);
 
 	const [email, setEmail, handleEmail] = useInput("");
@@ -47,16 +68,31 @@ export default function SignIn() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		setEmail("");
-		setPassword("");
-		const signIn = {
+		const userCredMatch = props.user.credentials.signin;
+		let signInCreds = {
 			email: email,
 			password: password,
-			remembered: remembered,
 		};
-		console.log(signIn);
+		const authUser = shallowEqual(signInCreds, userCredMatch);
+		setTimeout(() => {
+			if (!authUser) {
+				window.alert("Try again");
+				setEmail("");
+				setPassword("");
+			} else {
+				window.alert("Success!");
+				fakeAuth.authenticate(() => {
+					console.log("Auth?:", fakeAuth.isAuthenticated);
+					localStorage.setItem("token", props.user.token);
+					setLoggedIn(true);
+				});
+			}
+		}, 500);
 	};
 
+	if (fakeAuth.isAuthenticated) {
+		return <Redirect to="/dashboard" />;
+	}
 	return (
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
@@ -98,9 +134,8 @@ export default function SignIn() {
 						control={
 							<Checkbox
 								value={remembered}
-								onChange={() => {
-									setRemembered(!remembered);
-									console.log(remembered);
+								onChange={(e, checked) => {
+									setRemembered(checked);
 								}}
 								color="primary"
 							/>
@@ -136,3 +171,11 @@ export default function SignIn() {
 		</Container>
 	);
 }
+
+const mapStateToProps = (state) => {
+	return {
+		user: state.user,
+	};
+};
+
+export default connect(mapStateToProps)(SignIn);

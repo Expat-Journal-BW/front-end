@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Dashboard = (props) => {
 	const [state, setState] = useState({});
