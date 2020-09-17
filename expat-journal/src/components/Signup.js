@@ -14,6 +14,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+import { useInput } from "../hooks/useInput";
+
 function Copyright() {
 	return (
 		<Typography variant="body2" color="textSecondary" align="center">
@@ -50,6 +52,26 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
 	const classes = useStyles();
 
+	const [firstName, setFirstName, handleFirstName] = useInput("");
+	const [lastName, setLastName, handleLastName] = useInput("");
+	const [email, setEmail, handleEmail] = useInput("");
+	const [password, setPassword, handlePassword] = useInput("");
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		setFirstName("");
+		setLastName("");
+		setEmail("");
+		setPassword("");
+		const signUp = {
+			firstname: firstName,
+			lastname: lastName,
+			email: email,
+			password: password,
+		};
+		console.log(signUp);
+	};
+
 	return (
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
@@ -60,7 +82,7 @@ export default function SignUp() {
 				<Typography component="h1" variant="h5">
 					Sign up
 				</Typography>
-				<form className={classes.form} noValidate>
+				<form className={classes.form} onSubmit={handleSubmit} noValidate>
 					<Grid container spacing={2}>
 						<Grid item xs={12} sm={6}>
 							<TextField
@@ -72,6 +94,8 @@ export default function SignUp() {
 								id="firstName"
 								label="First Name"
 								autoFocus
+								value={firstName}
+								onChange={(e) => handleFirstName(e.target.value)}
 							/>
 						</Grid>
 						<Grid item xs={12} sm={6}>
@@ -83,6 +107,11 @@ export default function SignUp() {
 								label="Last Name"
 								name="lastName"
 								autoComplete="lname"
+								value={lastName}
+								onChange={(e) => {
+									handleLastName(e.target.value);
+									console.log(e.target.value);
+								}}
 							/>
 						</Grid>
 						<Grid item xs={12}>
@@ -94,6 +123,8 @@ export default function SignUp() {
 								label="Email Address"
 								name="email"
 								autoComplete="email"
+								value={email}
+								onChange={(e) => handleEmail(e.target.value)}
 							/>
 						</Grid>
 						<Grid item xs={12}>
@@ -106,6 +137,8 @@ export default function SignUp() {
 								type="password"
 								id="password"
 								autoComplete="current-password"
+								value={password}
+								onChange={(e) => handlePassword(e.target.value)}
 							/>
 						</Grid>
 						<Grid item xs={12}>

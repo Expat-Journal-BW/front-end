@@ -1,9 +1,10 @@
 const user = {
 	Authentication: "token",
 	credentials: {
-		username: "testuser",
-		password: "testpass",
+		firstname: "testfirst",
+		lastname: "testlast",
 		email: "test@test.com",
+		password: "testpass",
 	},
 	data: {
 		photos: [],
