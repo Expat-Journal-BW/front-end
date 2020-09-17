@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
 import { Link as SignLink } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -14,20 +13,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+import Copyright from "./Copyright";
 import { useInput } from "../hooks/useInput";
-
-function Copyright() {
-	return (
-		<Typography variant="body2" color="textSecondary" align="center">
-			{"Copyright © "}
-			<Link color="inherit" href="https://material-ui.com/">
-				Use My Tech Stuff
-			</Link>{" "}
-			{new Date().getFullYear()}
-			{"."}
-		</Typography>
-	);
-}
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -52,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
 	const classes = useStyles();
 
+	const [checked, setChecked] = useState(false);
+
 	const [firstName, setFirstName, handleFirstName] = useInput("");
 	const [lastName, setLastName, handleLastName] = useInput("");
 	const [email, setEmail, handleEmail] = useInput("");
@@ -68,6 +57,7 @@ export default function SignUp() {
 			lastname: lastName,
 			email: email,
 			password: password,
+			receiveUpdates: checked,
 		};
 		console.log(signUp);
 	};
@@ -143,7 +133,13 @@ export default function SignUp() {
 						</Grid>
 						<Grid item xs={12}>
 							<FormControlLabel
-								control={<Checkbox value="allowExtraEmails" color="primary" />}
+								control={
+									<Checkbox
+										value={checked}
+										onChange={() => setChecked(!checked)}
+										color="primary"
+									/>
+								}
 								label="I want to receive inspiration, marketing promotions and updates via email."
 							/>
 						</Grid>
@@ -167,7 +163,7 @@ export default function SignUp() {
 				</form>
 			</div>
 			<Box mt={5}>
-				<Copyright />
+				<Copyright text="Use My Tech Stuff" />
 			</Box>
 		</Container>
 	);
