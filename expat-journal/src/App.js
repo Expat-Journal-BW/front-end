@@ -1,30 +1,24 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import useStyles from "./components/Styles"; //import useStyles
+  
+import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import './App.css';
+import { Link as SignLink  } from 'react-router-dom';
+import Signup from "./components/Signup";
+import Signin from "./components/Signin"
 
-function App() {
-	// init useStyles inside a var
-	const classes = useStyles();
-	//assign to className eg: className={classes.className}
-	return (
-		<div className="app">
-			<header className="App-header">
-				<img src={logo} className="App-logo" alt="logo" />
-				<p className={classes.app}>
-					Edit <code>src/App.js</code> and save to reload.
-				</p>
-				<a
-					className="App-link"
-					href="https://reactjs.org"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					Learn React
-				</a>
-			</header>
-		</div>
-	);
-}
 
-export default App;
+export default function App() {
+  return (
+    <div className="App">
+      <nav>
+      <div className='nav-link'>
+      <SignLink to="/src/components/Signup" style={{paddingLeft: 13, textDecoration: 'none', color: 'black'}}>Signup</SignLink>
+      <SignLink to="/src/components/Signin" style={{paddingLeft: 13, textDecoration: 'none', color:'black'}}>Signin</SignLink>
+      </div>
+      </nav> 
+         <Route exact path="/src/Components/Signup" component={Signup} />
+        <Route exact path="/src/Components/SignIn" component={Signin} />
+           </div>
+      
+  );
+};
