@@ -124,6 +124,12 @@ const UpdateStoryForm = props => {
 
 
 
-}
+};
 
-export default UpdateStoryForm;
+const mapStateToProps = (state) => {
+    return {
+        user: state.user.data,
+    };
+};
+
+export default connect(mapStateToProps)(UpdateStoryForm);
