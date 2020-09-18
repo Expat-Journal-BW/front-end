@@ -12,7 +12,6 @@ const UpdateStoryForm = props => {
             title: "",
             location: "",
             story: "",
-            id: "",
             //photo: []
         };
 
@@ -60,12 +59,24 @@ const UpdateStoryForm = props => {
 
       };
 
+      const DeleteStory = e =>{
+          axiosWithAuth()
+          .delete(``)
+          .then((res)=> {
+              console.log("deleting this story from updateStoryForm:", res)
+          })
+          .catch((err)=>{
+              console.log("Why God, why? from delete function in updatestory:", err)
+          })
+
+      };
+
     return(
 
         <div>
                 <form>
                     <div>
-                        <input type = "number"
+                        <input type = "date"
                             name = "date"
                             placeholder = "date"
                             value = {story.date}
@@ -96,15 +107,9 @@ const UpdateStoryForm = props => {
                             onChange = {ChangeHandler}>
                         </input>
                     </div>
-                    <div>
-                        <input type = "number"
-                            name = "id"
-                            placeholder = "id"
-                            value = {story.id}
-                            onChange = {ChangeHandler}>
-                        </input>
-                    </div>
+                    
                     <button onClick= {SaveChange}>Save Changes</button>
+                    <button onClick= {DeleteStory}>Delete</button>
                     {/* <button type= "submit">Publish Privately</button> */}
                 </form>
             </div>
