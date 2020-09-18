@@ -14,12 +14,14 @@ const user = {
 	},
 	data: {
 		photos: [],
-		stories: [
-			{
-				story: "",
-			},
-		],
+		story: "",
+		date: Date.now(),
+		title: "",
+		location: "",
+		id: ""
+		
 	},
+
 };
 
 export default user;

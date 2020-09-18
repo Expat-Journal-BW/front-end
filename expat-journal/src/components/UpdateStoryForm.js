@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useParams, useHistory} from "react-router-dom";
 import {axiosWithAuth} from "../hooks/axiosWithAuth";
+import {connect} from "react-redux";
 
 const UpdateStoryForm = props => {
 
@@ -9,6 +10,7 @@ const UpdateStoryForm = props => {
      const initialState={
             date: "",
             title: "",
+            location: "",
             story: "",
             id: "",
             //photo: []
@@ -75,6 +77,14 @@ const UpdateStoryForm = props => {
                             name = "title"
                             placeholder = "Name your story"
                             value = {story.title}
+                            onChange = {ChangeHandler}>
+                        </input>
+                    </div>
+                    <div>
+                        <input type = "text"
+                            name = "location"
+                            placeholder = "Name your story"
+                            value = {story.location}
                             onChange = {ChangeHandler}>
                         </input>
                     </div>
