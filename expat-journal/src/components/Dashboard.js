@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { fakeAuth } from "../hooks/axiosWithAuth";
+import AddStoryForm from "../components/AddStoryForm";
 
 const Dashboard = (props) => {
 	console.log("Dashboard props:", props);
@@ -33,6 +34,7 @@ const Dashboard = (props) => {
 					Sign Out
 				</button>
 				<h2>Dashboard!</h2>
+				<AddStoryForm/>
 			</div>
 		</div>
 	);
