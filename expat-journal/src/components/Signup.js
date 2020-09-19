@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import { Link as SignLink } from "react-router-dom";
+import { Link as SignLink, Redirect } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
 import Copyright from "./Copyright";
 import { useInput } from "../hooks/useInput";
+import { fakeAuth } from "../hooks/axiosWithAuth";
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -36,7 +36,12 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function SignUp() {
+export default function SignUp(props) {
+	useEffect(() => {
+		console.log("SignUp props:", props);
+		console.log("SignUp props.users:", props.users);
+	}, [props]);
+
 	const classes = useStyles();
 
 	const [checked, setChecked] = useState(false);
@@ -46,21 +51,33 @@ export default function SignUp() {
 	const [email, setEmail, handleEmail] = useInput("");
 	const [password, setPassword, handlePassword] = useInput("");
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
+	const clearInputs = () => {
 		setFirstName("");
 		setLastName("");
 		setEmail("");
 		setPassword("");
-		const signUp = {
-			firstname: firstName,
-			lastname: lastName,
-			email: email,
-			password: password,
-			receiveUpdates: checked,
-		};
-		console.log(signUp);
 	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		clearInputs();
+		const signUpDetails = {
+			credentials: {
+				email: email,
+				password: password,
+			},
+			nameOfUser: {
+				firstName: firstName,
+				lastName: lastName,
+			},
+		};
+		props.SignUp(signUpDetails);
+		fakeAuth.authenticate();
+	};
+
+	if (fakeAuth.isAuthenticated) {
+		return <Redirect to="/userdashboard" />;
+	}
 
 	return (
 		<Container component="main" maxWidth="xs">
@@ -100,7 +117,6 @@ export default function SignUp() {
 								value={lastName}
 								onChange={(e) => {
 									handleLastName(e.target.value);
-									console.log(e.target.value);
 								}}
 							/>
 						</Grid>
@@ -155,9 +171,7 @@ export default function SignUp() {
 					</Button>
 					<Grid container justify="flex-end">
 						<Grid item>
-							<SignLink to="/src/Components/Signin">
-								Already have an account? Sign in
-							</SignLink>
+							<SignLink to="/signin">Already have an account? Sign in</SignLink>
 						</Grid>
 					</Grid>
 				</form>

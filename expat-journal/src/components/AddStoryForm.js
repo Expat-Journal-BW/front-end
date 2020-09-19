@@ -1,109 +1,100 @@
 import React from "react";
 //import {useHistory} from "react-router-dom";
 //import axiosWithAuth from "../hooks/axiosWithAuth";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
+import { useInput } from "../hooks/useInput";
 
+function AddStoryForm(props) {
+	const [date, setDate, handleDate] = useInput(Date.now());
+	const [title, setTitle, handleTitle] = useInput("");
+	const [location, setLocation, handleLocation] = useInput("");
+	const [story, setStory, handleStory] = useInput("");
 
+	const clearInputs = () => {
+		setDate("");
+		setTitle("");
+		setLocation("");
+		setStory("");
+	};
 
+	const addStory = (e) => {
+		e.preventDefault();
+		console.log(props);
 
-class AddStoryForm extends React.Component{
-    constructor(props){
-        super(props)
-       console.log("this is from AddStory and these are your props:",props); 
+		const newStory = {
+			date: date,
+			title: title,
+			location: location,
+			story: story,
+		};
 
-        this.state= {
-            private: false
-            
-        };
+		setTimeout(() => {
+			clearInputs();
+			window.alert("HI!");
+			console.log(newStory);
+		}, 500);
+		//axiosWithAuth()
+		//.post(``, state)
+		// .then((res)=> {
+		//     this.props.history.push("/stories")
+		//     console.log("this is your data thats being posted from AddStory:", res)
+		// })
+		// .catch((err)={
+		//     console.log("Oh shit! You've got an error trying to update state in Add Story", err)
+		// })
+	};
 
-    }
+	return (
+		<div>
+			<form onSubmit={addStory}>
+				<div>
+					<input
+						type="date"
+						name="date"
+						placeholder="date"
+						value={date}
+						onChange={(e) => handleDate(e.target.value)}
+					></input>
+				</div>
+				<div>
+					<input
+						type="textarea"
+						name="title"
+						placeholder="Name your story"
+						value={title}
+						onChange={(e) => handleTitle(e.target.value)}
+					></input>
+				</div>
+				<div>
+					<input
+						type="text"
+						name="location"
+						placeholder="Location"
+						value={location}
+						onChange={(e) => handleLocation(e.target.value)}
+					></input>
+				</div>
+				<div>
+					<input
+						type="textarea"
+						name="story"
+						placeholder="Tell us your story"
+						value={story}
+						onChange={(e) => handleStory(e.target.value)}
+					></input>
+				</div>
 
-
-
-    ChangeHandler = (e) => {
-        this.setState({[e.target.name]: e.target.value});
-    }
-
-
-    addStory = (e)=> {
-        e.preventDefault();
-        console.log(this.state);
-        //axiosWithAuth()
-        //.post(``, this.state)
-        // .then((res)=> {
-        //     this.props.history.push("/stories")   
-        //     console.log("this is your data thats being posted from AddStory:", res)
-        // })
-        // .catch((err)={
-        //     console.log("Oh shit! You've got an error trying to update state in Add Story", err)
-        // })
-    }
-
-
-    render(){
-        const {date, title, location, story, id, } = this.state
-        return(
-            <div>
-                <form onSubmit = {this.addStory}>
-                    <div>
-                        <input type = "number"
-                            name = "date"
-                            placeholder = "date"
-                            value = {date}
-                            onChange = {this.ChangeHandler}>
-                        </input>
-                    </div>
-                    <div>
-                        <input type = "textarea"
-                            name = "title"
-                            placeholder = "Name your story"
-                            value = {title}
-                            onChange = {this.ChangeHandler}>
-                        </input>
-                    </div>
-                    <div>
-                        <input type = "text"
-                            name = "location"
-                            placeholder = "Name your story"
-                            value = {location}
-                            onChange = {this.ChangeHandler}>
-                        </input>
-                    </div>
-                    <div>
-                        <input type = "textarea"
-                            name = "story"
-                            placeholder = "Tell us your story"
-                            value = {story}
-                            onChange = {this.ChangeHandler}>
-                        </input>
-                    </div>
-                    <div>
-                        <input type = "number"
-                            name = "id"
-                            placeholder = "id"
-                            value = {id}
-                            onChange = {this.ChangeHandler}>
-                        </input>
-                    </div>
-
-                    <button type= "submit">Publish</button>
-                    {/* <button type= "submit">Publish Privately</button> */}
-                </form>
-            </div>
-        )
-    }
-
-
-
-
-
-
+				<button type="submit">Publish</button>
+				{/* <button type= "submit">Publish Privately</button> */}
+			</form>
+		</div>
+	);
 }
 
 const mapStateToProps = (state) => {
-    return{
-        user: state.user.data
-    }
-}
+	return {
+		user: state.user.data,
+	};
+};
 
 export default connect(mapStateToProps)(AddStoryForm);

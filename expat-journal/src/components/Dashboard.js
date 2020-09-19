@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
+import { Route, Redirect } from "react-router-dom";
 import { fakeAuth } from "../hooks/axiosWithAuth";
 import AddStoryForm from "../components/AddStoryForm";
 
@@ -9,15 +8,16 @@ const Dashboard = (props) => {
 	const [logout, setLogout] = useState(false);
 
 	const handleSignOut = (e) => {
-		//e.preventDefault();
+		e.preventDefault();
 		fakeAuth.signout(() => {
 			setTimeout(() => {
 				window.alert("Signed out!");
-				localStorage.clear();
 				setLogout(true);
 			}, 500);
 		});
 	};
+
+	const add = () => {};
 
 	if (!fakeAuth.isAuthenticated) {
 		return <Redirect to="/signin" />;
@@ -33,17 +33,12 @@ const Dashboard = (props) => {
 				>
 					Sign Out
 				</button>
+				<button>Add a story</button>
 				<h2>Dashboard!</h2>
-				<AddStoryForm/>
+				<Route exact path="/userdashboard/addstory" component={AddStoryForm} />
 			</div>
 		</div>
 	);
 };
 
-const mapStateToProps = (state) => {
-	return {
-		user: state.user,
-	};
-};
-
-export default connect(mapStateToProps)(Dashboard);
+export default Dashboard;

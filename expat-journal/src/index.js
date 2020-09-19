@@ -7,16 +7,9 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-import user from "./dummyUser";
+import SignUpReducer from "./reducers/SignUpReducer";
 
-const reducer = () => {
-	return {
-		message: "Hello World!",
-		user: user,
-	};
-};
-
-const store = createStore(reducer);
+const store = createStore(SignUpReducer);
 
 ReactDOM.render(
 	<React.StrictMode>
