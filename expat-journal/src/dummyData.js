@@ -23,8 +23,8 @@ const tokyoPhotos = [
 const initialState = {
 	users: [
 		{
-			id: 1,
 			user: {
+				id: 1,
 				credentials: {
 					email: "test@test.com",
 					password: "testpass",
@@ -49,5 +49,7 @@ const initialState = {
 		},
 	],
 };
+
+export const initUserId = initialState.users.length + 1;
 
 export default initialState;

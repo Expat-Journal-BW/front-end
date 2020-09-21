@@ -1,7 +1,4 @@
 import React from "react";
-//import {useHistory} from "react-router-dom";
-//import axiosWithAuth from "../hooks/axiosWithAuth";
-import { connect } from "react-redux";
 import { useInput } from "../hooks/useInput";
 
 function AddStoryForm(props) {
@@ -91,10 +88,4 @@ function AddStoryForm(props) {
 	);
 }
 
-const mapStateToProps = (state) => {
-	return {
-		user: state.user.data,
-	};
-};
-
-export default connect(mapStateToProps)(AddStoryForm);
+export default AddStoryForm;

@@ -6,10 +6,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import rootReducer from "./reducers/";
 
-import SignUpReducer from "./reducers/SignUpReducer";
-
-const store = createStore(SignUpReducer);
+const store = createStore(rootReducer);
 
 ReactDOM.render(
 	<React.StrictMode>

@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import { Link as SignLink } from "react-router-dom";
+//import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -17,6 +16,8 @@ import Container from "@material-ui/core/Container";
 import Copyright from "./Copyright";
 import { useInput } from "../hooks/useInput";
 import { fakeAuth } from "../hooks/axiosWithAuth";
+
+import "./componentStyles.css";
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -63,14 +64,14 @@ function SignIn(props) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		let signInCreds = {
+		const signInCreds = {
 			email: email,
 			password: password,
 		};
 		const authUser = handleCheck(signInCreds);
 		setTimeout(() => {
 			if (!authUser) {
-				window.alert(`Error: Authorized?: ${loggedIn}.` + "\nTry again");
+				window.alert("Error: Authorized?: " + loggedIn + ".\nTry again");
 				clearInputs();
 			} else {
 				fakeAuth.authenticate(() => {
@@ -144,14 +145,14 @@ function SignIn(props) {
 					</Button>
 					<Grid container>
 						<Grid item xs>
-							<Link href="#" variant="body2">
+							<Link to="#" className="Link">
 								Forgot password?
 							</Link>
 						</Grid>
 						<Grid item>
-							<SignLink to="/signup" variant="body2">
+							<Link to="/signup" className="Link">
 								{"Don't have an account? Sign Up"}
-							</SignLink>
+							</Link>
 						</Grid>
 					</Grid>
 				</form>

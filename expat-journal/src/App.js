@@ -1,21 +1,23 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import "./App.css";
-import { Link as SignLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Signup from "./components/Signup";
 import Signin from "./components/Signin";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./components/Dashboard";
 import { connect } from "react-redux";
-import { SignUp } from "./actions/signUpActions";
+import { SignUp, UpdateId } from "./actions/signUpActions";
+import { SignOut } from "./actions/dashboardActions";
 
 function App(props) {
+	console.log("App props:", props);
 	return (
 		<div className="App">
 			<Route exact path="/">
 				<nav>
 					<div className="nav-link">
-						<SignLink
+						<Link
 							to="/signup"
 							style={{
 								paddingLeft: 13,
@@ -24,8 +26,8 @@ function App(props) {
 							}}
 						>
 							Signup
-						</SignLink>
-						<SignLink
+						</Link>
+						<Link
 							to="/signin"
 							style={{
 								paddingLeft: 13,
@@ -34,7 +36,7 @@ function App(props) {
 							}}
 						>
 							Signin
-						</SignLink>
+						</Link>
 					</div>
 				</nav>
 			</Route>
@@ -50,12 +52,15 @@ function App(props) {
 
 const mapStateToProps = (state) => {
 	return {
+		nextUserId: state.initUserId,
 		users: state.users,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => ({
 	SignUp: (newUser) => dispatch(SignUp(newUser)),
+	UpdateId: () => dispatch(UpdateId()),
+	SignOut: () => dispatch(SignOut()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

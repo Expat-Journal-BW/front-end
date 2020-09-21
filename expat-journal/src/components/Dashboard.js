@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { fakeAuth } from "../hooks/axiosWithAuth";
-import AddStoryForm from "../components/AddStoryForm";
+
+import Stories from "./Stories";
+import AddStoryForm from "./AddStoryForm";
 
 const Dashboard = (props) => {
 	console.log("Dashboard props:", props);
 	const [logout, setLogout] = useState(false);
+	const [adding, setAdding] = useState(false);
+	// console.log(logout, Stories);
 
 	const handleSignOut = (e) => {
 		e.preventDefault();
@@ -13,14 +17,22 @@ const Dashboard = (props) => {
 			setTimeout(() => {
 				window.alert("Signed out!");
 				setLogout(true);
+				props.SignOut();
 			}, 500);
 		});
 	};
 
-	const add = () => {};
+	const add = (e) => {
+		e.preventDefault();
+		setAdding(true);
+	};
 
 	if (!fakeAuth.isAuthenticated) {
 		return <Redirect to="/signin" />;
+	}
+
+	if (adding) {
+		return <Redirect to="/userdashboard/addstory" />;
 	}
 
 	return (
@@ -33,9 +45,17 @@ const Dashboard = (props) => {
 				>
 					Sign Out
 				</button>
-				<button>Add a story</button>
+				<Route exact path="/userdashboard">
+					<button onClick={(e) => add(e)}>Add a story</button>
+				</Route>
 				<h2>Dashboard!</h2>
-				<Route exact path="/userdashboard/addstory" component={AddStoryForm} />
+				<Route
+					exact
+					path="/userdashboard/addstory"
+					component={() => (
+						<AddStoryForm adding={adding} setAdding={setAdding} />
+					)}
+				/>
 			</div>
 		</div>
 	);
