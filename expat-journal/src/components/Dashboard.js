@@ -73,8 +73,20 @@ const Dashboard = (props) => {
 		setAdding(true);
 	};
 
+	const handleCurrUserCheck = (users, userCheck) => {
+		return users.find((user, key) => {
+			let match =
+				user.user.credentials.email === userCheck.email &&
+				user.user.credentials.password === userCheck.password;
+			if (match) {
+				return users[key];
+			}
+		});
+	};
+
 	useEffect(() => {
 		console.log("Dashboard props:", props);
+		const handleCurrUserCheck
 	}, []);
 
 	if (!fakeAuth.isAuthenticated) {
