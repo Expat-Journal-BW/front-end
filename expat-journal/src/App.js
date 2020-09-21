@@ -9,6 +9,7 @@ import Dashboard from "./components/Dashboard";
 import { connect } from "react-redux";
 import { SignUp, UpdateId } from "./actions/signUpActions";
 import { SetCurrentUser, RemoveCurrentUser } from "./actions/dashboardActions";
+import { AddStory } from "./actions/addStoryFormActions";
 
 function App(props) {
 	useEffect(() => {
@@ -65,6 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
 	UpdateId: () => dispatch(UpdateId()),
 	SetCurrentUser: (user) => dispatch(SetCurrentUser(user)),
 	RemoveCurrentUser: () => dispatch(RemoveCurrentUser()),
+	AddStory: (newStory) => dispatch(AddStory(newStory)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

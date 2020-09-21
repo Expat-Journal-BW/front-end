@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -33,12 +33,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function AddStoryForm(props) {
+	useEffect(() => {
+		console.log("ASF props:", props);
+	}, [props]);
 	const classes = useStyles();
+
+	const [upload, setUpload] = useState([]);
+	const [images, setImages] = useState([]);
+	const [imageUploadLoading, setImageUploadLoading] = useState(false);
 
 	const [date, setDate, handleDate] = useInput(Date.now());
 	const [title, setTitle, handleTitle] = useInput("");
 	const [location, setLocation, handleLocation] = useInput("");
 	const [story, setStory, handleStory] = useInput("");
+
+	const newStory = {
+		date: date,
+		title: title,
+		location: location,
+		story: story,
+		photos: [...images],
+	};
 
 	const clearInputs = () => {
 		setDate("");
@@ -47,11 +62,13 @@ function AddStoryForm(props) {
 		setStory("");
 	};
 
-	const newStory = {
-		date: date,
-		title: title,
-		location: location,
-		story: story,
+	const handleImageUpload = (image) => {
+		setImageUploadLoading(true);
+		setImages([...images, image]);
+		setTimeout(() => {
+			setUpload([]);
+			setImageUploadLoading(false);
+		}, 1000);
 	};
 
 	const addStory = (e) => {
@@ -66,12 +83,12 @@ function AddStoryForm(props) {
 			return check;
 		};
 		if (credCheck === true) {
-			window.alert("Please fill in entire form!");
+			window.alert("Please fill out the entire form!");
 		} else {
-			window.alert("HI!");
-			console.log(newStory);
-			clearInputs();
 			setTimeout(() => {
+				window.alert("Submitted.");
+				props.AddStory(newStory, props.user.id);
+				clearInputs();
 				props.setAdding(false);
 				//fakeAuth.authenticate();
 			}, 500);
@@ -88,50 +105,6 @@ function AddStoryForm(props) {
 	};
 
 	return (
-		// <div>
-		// 	<form onSubmit={addStory}>
-		// 		<div>
-		// 			<input
-		// 				type="date"
-		// 				name="date"
-		// 				placeholder="date"
-		// 				value={date}
-		// 				onChange={(e) => handleDate(e.target.value)}
-		// 			></input>
-		// 		</div>
-		// 		<div>
-		// 			<input
-		// 				type="textarea"
-		// 				name="title"
-		// 				placeholder="Name your story"
-		// 				value={title}
-		// 				onChange={(e) => handleTitle(e.target.value)}
-		// 			></input>
-		// 		</div>
-		// 		<div>
-		// 			<input
-		// 				type="text"
-		// 				name="location"
-		// 				placeholder="Location"
-		// 				value={location}
-		// 				onChange={(e) => handleLocation(e.target.value)}
-		// 			></input>
-		// 		</div>
-		// 		<div>
-		// 			<input
-		// 				type="textarea"
-		// 				name="story"
-		// 				placeholder="Tell us your story"
-		// 				value={story}
-		// 				onChange={(e) => handleStory(e.target.value)}
-		// 			></input>
-		// 		</div>
-
-		// 		<button type="submit">Publish</button>
-		// 		{/* <button type= "submit">Publish Privately</button> */}
-		// 	</form>
-		// </div>
-
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<div className={classes.paper}>
@@ -199,6 +172,22 @@ function AddStoryForm(props) {
 								value={story}
 								onChange={(e) => handleStory(e.target.value)}
 							/>
+						</Grid>
+						<Grid item xs={12} sm={6}>
+							<Button variant="contained" component="label">
+								Upload File
+								<input
+									type="file"
+									style={{ display: "none" }}
+									value={upload}
+									onChange={(e) => {
+										handleImageUpload(e.target.value);
+									}}
+								/>
+							</Button>
+						</Grid>
+						<Grid item xs={12} sm={6}>
+							<span>{`${images.length} image(s) uploaded`}</span>
 						</Grid>
 					</Grid>
 					<Button

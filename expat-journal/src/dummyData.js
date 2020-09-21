@@ -4,20 +4,47 @@ import meijiShrine from "./images/TokyoMeijiShrine.jpeg";
 import miraikanMuseum from "./images/TokyoMiraikanMuseum.jpg";
 import natArtCenter from "./images/TokyoNationalArtCenter.jpg";
 import sensojiTemple from "./images/TokyoSensojiTemple.jpg";
-import shibuya from "./images/TokyoShibuya.jpg";
-import skytree from "./images/TokyoSkytree.jpg";
-import uenoPark from "./images/TokyoUenoPark.jpg";
+import tokyoShibuya from "./images/TokyoShibuya.jpg";
+import tokyoSkytree from "./images/TokyoSkytree.jpg";
+import tokyoUenoPark from "./images/TokyoUenoPark.jpg";
 
 const tokyoPhotos = [
-	ginzaDistrict,
-	kabukiTheatre,
-	meijiShrine,
-	miraikanMuseum,
-	natArtCenter,
-	sensojiTemple,
-	shibuya,
-	skytree,
-	uenoPark,
+	{
+		img: ginzaDistrict,
+		title: "Ginza District",
+	},
+	{
+		img: kabukiTheatre,
+		title: "Kubuki Theatre",
+	},
+	{
+		img: meijiShrine,
+		title: "Meiji Shrine",
+	},
+	{
+		img: miraikanMuseum,
+		title: "Miraikan Museum",
+	},
+	{
+		img: natArtCenter,
+		title: "National Arts Center",
+	},
+	{
+		img: sensojiTemple,
+		title: "Sensoji Temple",
+	},
+	{
+		img: tokyoShibuya,
+		title: "Tokyo Shibuya",
+	},
+	{
+		img: tokyoSkytree,
+		title: "Tokyo Skytree",
+	},
+	{
+		img: tokyoUenoPark,
+		title: "Ueno Park",
+	},
 ];
 
 const initialState = {

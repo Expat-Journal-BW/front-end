@@ -65,7 +65,7 @@ function SignIn(props) {
 			);
 		});
 	};
-	const handleCurrAuthCheck = (users, userCheck) => {
+	const handleCurrUserCheck = (users, userCheck) => {
 		return users.find((user, key) => {
 			let match =
 				user.user.credentials.email === userCheck.email &&
@@ -79,7 +79,7 @@ function SignIn(props) {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const authUser = handleAuthCheck(signInCreds);
-		const currUser = handleCurrAuthCheck(props.users, signInCreds);
+		const currUser = handleCurrUserCheck(props.users, signInCreds);
 		console.log("currUser:", currUser);
 		if (!authUser) {
 			window.alert("Error: Authorized?: " + loggedIn + ".\nTry again");

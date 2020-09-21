@@ -44,7 +44,25 @@ const rootReducer = (state = initState, action) => {
 				currentUser: {},
 			};
 		case ADD_STORY:
-			return state;
+			return {
+				...state,
+				users: [
+					...state.users,
+					state.users.map((users) => {
+						if (users.user.id === action.id) {
+							return {
+								user: {
+									...users.user,
+									posts: users.user.posts.map(
+										...users.user.posts,
+										action.payload
+									),
+								},
+							};
+						}
+					}),
+				],
+			};
 		default:
 			return state;
 	}
