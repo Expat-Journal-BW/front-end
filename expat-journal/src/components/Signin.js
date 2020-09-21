@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
+import React, { useState } from "react";
+import { Redirect, Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import { Link as SignLink } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -16,9 +13,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Copyright from "./Copyright";
-
 import { useInput } from "../hooks/useInput";
 import { fakeAuth } from "../hooks/axiosWithAuth";
+
+import "./componentStyles.css";
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -40,23 +38,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const shallowEqual = (object1, object2) => {
-	const keys1 = Object.keys(object1);
-	const keys2 = Object.keys(object2);
-
-	if (keys1.length !== keys2.length) {
-		return false;
-	}
-
-	for (let key of keys1) {
-		if (object1[key] !== object2[key]) {
-			return false;
-		}
-	}
-
-	return true;
-};
-
 function SignIn(props) {
 	const classes = useStyles();
 
@@ -66,31 +47,51 @@ function SignIn(props) {
 	const [email, setEmail, handleEmail] = useInput("");
 	const [password, setPassword, handlePassword] = useInput("");
 
+	const signInCreds = {
+		email: email,
+		password: password,
+	};
+
+	const clearInputs = () => {
+		setEmail("");
+		setPassword("");
+	};
+
+	const handleAuthCheck = (obj) => {
+		return props.users.some((user, key) => {
+			return (
+				user.user.credentials.email === obj.email &&
+				user.user.credentials.password === obj.password
+			);
+		});
+	};
+	const handleCurrUserCheck = (users, userCheck) => {
+		return users.find((user, key) => {
+			let match =
+				user.user.credentials.email === userCheck.email &&
+				user.user.credentials.password === userCheck.password;
+			if (match) {
+				return users[key];
+			}
+		});
+	};
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		//This is where the user's credentials are being
-		//compared to the sign in form's state
-		//using props.user.credentials.signin as a placeholder
-		const userCredMatch = props.user.credentials.signin; //Can adjust later
-		let signInCreds = {
-			email: email,
-			password: password,
-		};
-		const authUser = shallowEqual(signInCreds, userCredMatch);
-		setTimeout(() => {
-			if (!authUser) {
-				window.alert("Try again");
-				setEmail("");
-				setPassword("");
-			} else {
-				window.alert("Success!");
-				fakeAuth.authenticate(() => {
-					console.log("Auth?:", fakeAuth.isAuthenticated);
-					localStorage.setItem("token", props.user.token);
-					setLoggedIn(true);
-				});
-			}
-		}, 500);
+		const authUser = handleAuthCheck(signInCreds);
+		const currUser = handleCurrUserCheck(props.users, signInCreds);
+		console.log("currUser:", currUser);
+		if (!authUser) {
+			window.alert("Error: Authorized?: " + loggedIn + ".\nTry again");
+			clearInputs();
+		} else {
+			window.alert("Success!");
+			setTimeout(() => {
+				fakeAuth.authenticate();
+				props.SetCurrentUser(currUser);
+				setLoggedIn(true);
+			}, 1000);
+		}
 	};
 
 	if (fakeAuth.isAuthenticated) {
@@ -137,8 +138,8 @@ function SignIn(props) {
 						control={
 							<Checkbox
 								value={remembered}
-								onChange={(e, checked) => {
-									setRemembered(checked);
+								onChange={() => {
+									setRemembered(!remembered);
 								}}
 								color="primary"
 							/>
@@ -156,14 +157,14 @@ function SignIn(props) {
 					</Button>
 					<Grid container>
 						<Grid item xs>
-							<Link href="#" variant="body2">
+							<Link to="#" className="Link">
 								Forgot password?
 							</Link>
 						</Grid>
 						<Grid item>
-							<SignLink to="/src/Components/Signup" variant="body2">
+							<Link to="/signup" className="Link">
 								{"Don't have an account? Sign Up"}
-							</SignLink>
+							</Link>
 						</Grid>
 					</Grid>
 				</form>
@@ -175,10 +176,4 @@ function SignIn(props) {
 	);
 }
 
-const mapStateToProps = (state) => {
-	return {
-		user: state.user,
-	};
-};
-
-export default connect(mapStateToProps)(SignIn);
+export default SignIn;
