@@ -49,13 +49,6 @@ function SignUp(props) {
 	const [email, setEmail, handleEmail] = useInput("");
 	const [password, setPassword, handlePassword] = useInput("");
 
-	const clearInputs = () => {
-		setFirstName("");
-		setLastName("");
-		setEmail("");
-		setPassword("");
-	};
-
 	const signUpDetails = {
 		id: props.nextUserId,
 		credentials: {
@@ -66,6 +59,13 @@ function SignUp(props) {
 			firstName: firstName,
 			lastName: lastName,
 		},
+	};
+
+	const clearInputs = () => {
+		setFirstName("");
+		setLastName("");
+		setEmail("");
+		setPassword("");
 	};
 
 	const handleSubmit = (e) => {
