@@ -8,6 +8,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 import user from "./dummyUser";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const reducer = () => {
 	return {

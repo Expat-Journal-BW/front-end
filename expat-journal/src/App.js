@@ -6,6 +6,9 @@ import Signup from "./components/Signup";
 import Signin from "./components/Signin";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./components/Dashboard";
+import NavBar from './components/navbar'
+
+
 
 export default function App() {
 	return (
@@ -25,6 +28,9 @@ export default function App() {
 						Signin
 					</SignLink>
 				</div>
+				<div>
+		  <NavBar />
+		</div>
 			</nav>
 			<Route exact path="/signup" component={Signup} />
 			<Route exact path="/signin" component={Signin} />
@@ -32,3 +38,4 @@ export default function App() {
 		</div>
 	);
 }
+
