@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SignUp(props) {
-	console.log(`Should be ${props.nextUserId}`, props.nextUserId);
+	console.log("SignUp props:", props);
 	const classes = useStyles();
 
 	const [checked, setChecked] = useState(false);
@@ -70,12 +70,19 @@ function SignUp(props) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		setTimeout(() => {
-			fakeAuth.authenticate();
-			props.SignUp(signUpDetails);
+		const credCheck =
+			(email && password && firstName && lastName) === "" ? true : false;
+		if (credCheck === true) {
+			window.alert("Please fill in entire form!");
+		} else {
 			clearInputs();
-			props.UpdateId();
-		}, 500);
+			setTimeout(() => {
+				fakeAuth.authenticate();
+				props.SignUp(signUpDetails);
+				props.SetCurrentUser(signUpDetails);
+				props.UpdateId();
+			}, 1000);
+		}
 	};
 
 	if (fakeAuth.isAuthenticated) {

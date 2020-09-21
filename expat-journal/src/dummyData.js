@@ -52,4 +52,6 @@ const initialState = {
 
 export const initUserId = initialState.users.length + 1;
 
+export const currentUser = {};
+
 export default initialState;

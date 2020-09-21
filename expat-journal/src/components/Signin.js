@@ -6,7 +6,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-//import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -48,38 +47,51 @@ function SignIn(props) {
 	const [email, setEmail, handleEmail] = useInput("");
 	const [password, setPassword, handlePassword] = useInput("");
 
+	const signInCreds = {
+		email: email,
+		password: password,
+	};
+
 	const clearInputs = () => {
 		setEmail("");
 		setPassword("");
 	};
 
-	const handleCheck = (obj) => {
-		return props.users.some((user) => {
+	const handleAuthCheck = (obj) => {
+		return props.users.some((user, key) => {
 			return (
 				user.user.credentials.email === obj.email &&
 				user.user.credentials.password === obj.password
 			);
 		});
 	};
+	const handleCurrAuthCheck = (users, userCheck) => {
+		return users.find((user, key) => {
+			let match =
+				user.user.credentials.email === userCheck.email &&
+				user.user.credentials.password === userCheck.password;
+			if (match) {
+				return users[key];
+			}
+		});
+	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const signInCreds = {
-			email: email,
-			password: password,
-		};
-		const authUser = handleCheck(signInCreds);
-		setTimeout(() => {
-			if (!authUser) {
-				window.alert("Error: Authorized?: " + loggedIn + ".\nTry again");
-				clearInputs();
-			} else {
-				fakeAuth.authenticate(() => {
-					window.alert("Success!");
-					setLoggedIn(true);
-				});
-			}
-		}, 500);
+		const authUser = handleAuthCheck(signInCreds);
+		const currUser = handleCurrAuthCheck(props.users, signInCreds);
+		console.log("currUser:", currUser);
+		if (!authUser) {
+			window.alert("Error: Authorized?: " + loggedIn + ".\nTry again");
+			clearInputs();
+		} else {
+			window.alert("Success!");
+			setTimeout(() => {
+				fakeAuth.authenticate();
+				props.SetCurrentUser(currUser);
+				setLoggedIn(true);
+			}, 1000);
+		}
 	};
 
 	if (fakeAuth.isAuthenticated) {

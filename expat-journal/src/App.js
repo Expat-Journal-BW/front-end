@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route } from "react-router-dom";
 import "./App.css";
 import { Link } from "react-router-dom";
@@ -8,10 +8,12 @@ import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./components/Dashboard";
 import { connect } from "react-redux";
 import { SignUp, UpdateId } from "./actions/signUpActions";
-import { SignOut } from "./actions/dashboardActions";
+import { SetCurrentUser, RemoveCurrentUser } from "./actions/dashboardActions";
 
 function App(props) {
-	console.log("App props:", props);
+	useEffect(() => {
+		console.log("App props:", props);
+	}, [props]);
 	return (
 		<div className="App">
 			<Route exact path="/">
@@ -52,6 +54,7 @@ function App(props) {
 
 const mapStateToProps = (state) => {
 	return {
+		currentUser: state.currentUser,
 		nextUserId: state.initUserId,
 		users: state.users,
 	};
@@ -60,7 +63,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
 	SignUp: (newUser) => dispatch(SignUp(newUser)),
 	UpdateId: () => dispatch(UpdateId()),
-	SignOut: () => dispatch(SignOut()),
+	SetCurrentUser: (user) => dispatch(SetCurrentUser(user)),
+	RemoveCurrentUser: () => dispatch(RemoveCurrentUser()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,10 +1,14 @@
 import { ADD_USER, UPDATE_USER_ID } from "../actions/signUpActions";
 import { ADD_STORY } from "../actions/addStoryFormActions";
-import { SIGN_OUT } from "../actions/dashboardActions";
+import {
+	SET_CURRENT_USER,
+	REMOVE_CURRENT_USER,
+} from "../actions/dashboardActions";
 
-import initialState, { initUserId } from "../dummyData";
+import initialState, { initUserId, currentUser } from "../dummyData";
 
 const initState = {
+	currentUser: currentUser,
 	initUserId: initUserId,
 	users: [...initialState.users],
 };
@@ -29,8 +33,16 @@ const rootReducer = (state = initState, action) => {
 				...state,
 				initUserId: state.initUserId + 1,
 			};
-		case SIGN_OUT:
-			return state;
+		case SET_CURRENT_USER:
+			return {
+				...state,
+				currentUser: { ...action.payload },
+			};
+		case REMOVE_CURRENT_USER:
+			return {
+				...state,
+				currentUser: {},
+			};
 		case ADD_STORY:
 			return state;
 		default:
