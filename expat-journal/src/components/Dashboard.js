@@ -86,7 +86,6 @@ const Dashboard = (props) => {
 
 	useEffect(() => {
 		console.log("Dashboard props:", props);
-		const handleCurrUserCheck
 	}, []);
 
 	if (!fakeAuth.isAuthenticated) {
@@ -173,14 +172,15 @@ const Dashboard = (props) => {
 					<Grid container spacing={4}>
 						{props.currentUser.user.posts.map((posts) => {
 							console.log("post:", posts);
+							console.log("post photos:", posts.post.photos[0]);
 							return (
 								<Grid item key={posts} xs={12} sm={6} md={4}>
 									<Card className={classes.card}>
-										{/* <CardMedia
+										<CardMedia
 											className={classes.cardMedia}
-											image={placeholderPhoto.photo.img}
-											title={placeholderPhoto.photo.title}
-										/> */}
+											image={posts.post.photos[0].img}
+											//title={placeholderPhoto.photo.title}
+										/>
 										<CardContent className={classes.cardContent}>
 											<Typography gutterBottom variant="h5" component="h2">
 												{posts.post.title}
