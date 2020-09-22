@@ -14,6 +14,8 @@ import { SignUp, UpdateId } from "./actions/signUpActions";
 import { SetCurrentUser, RemoveCurrentUser } from "./actions/dashboardActions";
 import { AddStory } from "./actions/addStoryFormActions";
 
+import {updateStory} from "./actions/updateStoryFormAction";
+
 function App(props) {
 	useEffect(() => {
 		console.log("App props:", props);
@@ -70,6 +72,7 @@ const mapDispatchToProps = (dispatch) => ({
 	SetCurrentUser: (user) => dispatch(SetCurrentUser(user)),
 	RemoveCurrentUser: () => dispatch(RemoveCurrentUser()),
 	AddStory: (newStory) => dispatch(AddStory(newStory)),
+	updateStory: (updatedStory, userId) => dispatch(updateStory(updatedStory, userId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

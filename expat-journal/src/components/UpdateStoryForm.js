@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { axiosWithAuth } from "../hooks/axiosWithAuth";
+import  axiosAuth  from "../hooks/axiosWithAuth";
 import { connect } from "react-redux";
+import {useInput} from "../hooks/useInput";
 
 const UpdateStoryForm = (props) => {
-	const { id } = useParams();
+    const { id } = useParams();
+    const { push } = useHistory();
 
-	const initialState = {
-		date: "",
-		title: "",
-		location: "",
-		story: "",
-		id: "",
-		//photo: []
-	};
-
-	const { push } = useHistory();
-	const [story, setStory] = useState(initialState);
+    const [date, setDate, handleDate] = useInput(Date.now());
+    const [title, setTitle, handleTitle] = useInput("");
+    const [location, setLocation, handleLocation] = useInput("");
+    const [story, setStory, handleStory] = useInput("");
+    
+	
+	
 
 	useEffect(() => {
-		axiosWithAuth()
+		axiosAuth()
 			.get(`{id}`)
 			.then((res) => {
 				setStory(res.data);
@@ -42,7 +40,7 @@ const UpdateStoryForm = (props) => {
 
 	const SaveChange = (e) => {
 		e.preventDefault();
-		axiosWithAuth()
+		axiosAuth()
 			.put(`{id}`)
 			.then((res) => {
 				setStory(res);
@@ -55,7 +53,19 @@ const UpdateStoryForm = (props) => {
 					err
 				);
 			});
-	};
+    };
+    
+    const Delete = (e) => {
+        e.preventDefault()
+        axiosAuth()
+        .delete(`{id}`)
+        .then((res)=> {
+            console.log("res",res)
+        })
+        .catch((err)=> {
+            console.log("err", err)
+        })
+    }
 
 	return (
 		<div>
@@ -65,8 +75,8 @@ const UpdateStoryForm = (props) => {
 						type="date"
 						name="date"
 						placeholder="date"
-						value={story.date}
-						onChange={ChangeHandler}
+						value={date}
+						onChange={(e) => handleDate(e.target.value)}
 					></input>
 				</div>
 				<div>
@@ -74,8 +84,8 @@ const UpdateStoryForm = (props) => {
 						type="textarea"
 						name="title"
 						placeholder="Name your story"
-						value={story.title}
-						onChange={ChangeHandler}
+						value={title}
+						onChange={(e) => handleTitle(e.target.value)}
 					></input>
 				</div>
 				<div>
@@ -83,8 +93,8 @@ const UpdateStoryForm = (props) => {
 						type="text"
 						name="location"
 						placeholder="Location"
-						value={story.location}
-						onChange={ChangeHandler}
+						value={location}
+						onChange={(e) => handleLocation(e.target.value)}
 					></input>
 				</div>
 				<div>
@@ -92,8 +102,8 @@ const UpdateStoryForm = (props) => {
 						type="textarea"
 						name="story"
 						placeholder="Tell us your story"
-						value={story.story}
-						onChange={ChangeHandler}
+						value={story}
+						onChange={(e) => handleStory(e.target.value)}
 					></input>
 				</div>
 				<button onClick={SaveChange}>Save Changes</button>

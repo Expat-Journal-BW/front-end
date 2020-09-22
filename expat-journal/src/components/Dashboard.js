@@ -18,6 +18,7 @@ import { fakeAuth } from "../hooks/axiosWithAuth";
 import Copyright from "./Copyright";
 import Stories from "./Stories";
 import AddStoryForm from "./AddStoryForm";
+import UpdateStoryForm from "./UpdateStoryForm";
 
 const useStyles = makeStyles((theme) => ({
 	icon: {
@@ -56,6 +57,7 @@ const Dashboard = (props) => {
 
 	const [logout, setLogout] = useState(false);
 	const [adding, setAdding] = useState(false);
+	const [editing, setEditing] =useState(false);
 
 	const handleSignOut = (e) => {
 		e.preventDefault();
@@ -72,6 +74,12 @@ const Dashboard = (props) => {
 		e.preventDefault();
 		setAdding(true);
 	};
+
+	const editHandle = (e) => {
+		e.preventDefault();
+		setEditing(true)
+
+	}
 
 	const handleCurrUserCheck = (users, userCheck) => {
 		return users.find((user, key) => {
@@ -101,6 +109,18 @@ const Dashboard = (props) => {
 			/>
 		);
 	}
+	if (editing) {
+		return (
+			<UpdateStoryForm
+				setEditing={setEditing}
+				EditStory={props.updateStory}
+				user={props.currentUser.user}
+			/>
+		);
+	}
+
+
+	
 
 	return (
 		<React.Fragment>
@@ -191,7 +211,7 @@ const Dashboard = (props) => {
 											<Button size="small" color="primary">
 												View
 											</Button>
-											<Button size="small" color="primary">
+											<Button onClick={(e)=>{editHandle(e)}} size="small" color="primary">
 												Edit
 											</Button>
 										</CardActions>
