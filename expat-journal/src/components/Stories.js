@@ -1,47 +1,45 @@
-import React from "react";
-import {axiosWithAuth} from "../hooks/axiosWithAuth";
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
 
-class Stories extends React.Component{
-    state = {
-        stories: []
-    };
+const useStyles = makeStyles((theme) => ({
+	root: {
+		display: "flex",
+		flexWrap: "wrap",
+		justifyContent: "space-around",
+		overflow: "hidden",
+		backgroundColor: theme.palette.background.paper,
+	},
+	gridList: {
+		width: 500,
+		height: 450,
+	},
+}));
 
-    componentDidMount(){
-        this.getStories();
-    }
+const Stories = (props) => {
+	console.log("Stories props:", props);
+	const [currentUser, setCurrentUser] = useState(props.user);
+	console.log("currentUser:", currentUser);
+	const classes = useStyles();
 
-    getStories = () => {
-        axiosWithAuth()
-        // .get(``)
-        // .then((res)=> {
-        //     console.log("these are stories from Stories.js:", res)
-        //     this.setState({
-        //         ...this.state,
-        //         stories: res
-        //     })
-        // })
-        // .catch((err)=> {
-        //     console.log( "My world is ending bc there's an error from getStories:", err)
-        // })
-    }
+	return (
+		<>
+			<div>Hey From Stories Page!</div>
 
-    render(){
-
-        return(
-
-            <div>Hey From Stories Page!</div>
-
-            // <div>{this.state.stories.map((story)=>(
-            //     <p key = {story.id}>{story.title}</p>
-            // ))}
-
-            // </div>
-        )
-    }
-
-
-
-
-}
+			<GridList cellHeight={160} className={classes.gridList} cols={3}>
+				{currentUser.posts.map((post) => {
+					return post.post.photos.map((photo, key) => {
+						return (
+							<GridListTile key={photo.img} cols={photo.cols || 1}>
+								<img src={photo.img} alt={photo.title} />
+							</GridListTile>
+						);
+					});
+				})}
+			</GridList>
+		</>
+	);
+};
 
 export default Stories;
