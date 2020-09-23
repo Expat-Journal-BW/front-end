@@ -4,6 +4,7 @@ import {
 	SET_CURRENT_USER,
 	REMOVE_CURRENT_USER,
 } from "../actions/dashboardActions";
+import {UPDATE_STORY} from "../actions/updateStoryFormAction"
 
 import initialState, { initUserId, currentUser } from "../dummyData";
 
@@ -63,6 +64,33 @@ const rootReducer = (state = initState, action) => {
 					}),
 				],
 			};
+			case UPDATE_STORY:
+				return{
+					...state,
+					user: [
+						...state.users,
+						state.users.map((users)=> {
+							if (users.user.id === action.id){
+								return {
+									user: {
+										...users.user,
+										posts: users.user.posts.map((array)=> {
+											if (array.post.id === action.payload.id){
+												return{
+												...array.posts,
+												 posts: action.payload
+
+												}
+											}
+										}
+											
+										)
+									}
+								}
+							}
+						})
+					]
+				}
 		default:
 			return state;
 	}

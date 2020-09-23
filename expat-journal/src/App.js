@@ -6,7 +6,8 @@ import Signup from "./components/Signup";
 import Signin from "./components/Signin";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./components/Dashboard";
-import NavBar from './components/navbar'
+import NavBar from './components/NavBar'
+
 
 
 import { connect } from "react-redux";
@@ -14,12 +15,16 @@ import { SignUp, UpdateId } from "./actions/signUpActions";
 import { SetCurrentUser, RemoveCurrentUser } from "./actions/dashboardActions";
 import { AddStory } from "./actions/addStoryFormActions";
 
+import {updateStory} from "./actions/updateStoryFormAction";
+
 function App(props) {
 	useEffect(() => {
 		console.log("App props:", props);
 	}, [props]);
 	return (
+		
 		<div className="App">
+			< NavBar />
 			<Route exact path="/">
 				<nav>
 					<div className="nav-link">
@@ -70,6 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
 	SetCurrentUser: (user) => dispatch(SetCurrentUser(user)),
 	RemoveCurrentUser: () => dispatch(RemoveCurrentUser()),
 	AddStory: (newStory) => dispatch(AddStory(newStory)),
+	updateStory: (updatedStory, userId) => dispatch(updateStory(updatedStory, userId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
