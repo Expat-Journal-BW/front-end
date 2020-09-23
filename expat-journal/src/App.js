@@ -6,7 +6,8 @@ import Signup from "./components/Signup";
 import Signin from "./components/Signin";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./components/Dashboard";
-import NavBar from './components/navbar'
+import NavBar from './components/NavBar'
+
 
 
 import { connect } from "react-redux";
@@ -21,7 +22,9 @@ function App(props) {
 		console.log("App props:", props);
 	}, [props]);
 	return (
+		
 		<div className="App">
+			< NavBar />
 			<Route exact path="/">
 				<nav>
 					<div className="nav-link">

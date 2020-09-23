@@ -7,7 +7,11 @@ import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-export default function App() {
+import Signin from "../components/Signin.js";
+import Signup from "../components/Signup"
+import {Link} from "react-router-dom";
+import {Route} from "react-router-dom";
+export default function NavBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleMenu = event => {
@@ -43,12 +47,14 @@ export default function App() {
               onClose={handleClose}
             >
                <MenuItem onClick={handleClose}>Add story</MenuItem>
-              <MenuItem onClick={handleClose}>Sign in </MenuItem>
-              <MenuItem onClick={handleClose}>Sign up</MenuItem>
+              <MenuItem onClick={handleClose} component={Link} to="/signin">Sign in </MenuItem>
+              <MenuItem onClick={handleClose} component={Link} to="/signup">Sign up</MenuItem>
             </Menu>
           </div>
         </Toolbar>
       </AppBar>
+
+      
     </div>
   );
 }
