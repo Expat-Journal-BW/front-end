@@ -6,7 +6,6 @@ import Signup from "./components/Signup";
 import Signin from "./components/Signin";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./components/Dashboard";
-import NavBar from './components/NavBar.js'
 
 
 
@@ -18,14 +17,14 @@ import { AddStory } from "./actions/addStoryFormActions";
 import {updateStory} from "./actions/updateStoryFormAction";
 
 function App(props) {
-	// hey hey
+	
 	useEffect(() => {
 		console.log("App props:", props);
 	}, [props]);
 	return (
 		
 		<div className="App">
-			< NavBar />
+			
 			<Route exact path="/">
 				<nav>
 					<div className="nav-link">

@@ -46,6 +46,7 @@ export default function NavBar() {
               open={open}
               onClose={handleClose}
             >
+               <MenuItem onClick={handleClose} component={Link} to="/">Home</MenuItem>
                <MenuItem onClick={handleClose}>Add story</MenuItem>
               <MenuItem onClick={handleClose} component={Link} to="/signin">Sign in </MenuItem>
               <MenuItem onClick={handleClose} component={Link} to="/signup">Sign up</MenuItem>
