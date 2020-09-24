@@ -8,14 +8,15 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import Signin from "./Signin.js";
-import Signup from "./Signup"
-import {Link} from "react-router-dom";
-import {Route} from "react-router-dom";
+import Signup from "./Signup";
+import { Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 export default function NavBar() {
   // hey hhheeeeyyyy adding more test to see if it'll push
+  //test add
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleMenu = event => {
+  const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -37,25 +38,27 @@ export default function NavBar() {
               anchorEl={anchorEl}
               anchorOrigin={{
                 vertical: "top",
-                horizontal: "right"
+                horizontal: "right",
               }}
               keepMounted
               transformOrigin={{
                 vertical: "top",
-                horizontal: "right"
+                horizontal: "right",
               }}
               open={open}
               onClose={handleClose}
             >
-               <MenuItem onClick={handleClose}>Add story</MenuItem>
-              <MenuItem onClick={handleClose} component={Link} to="/signin">Sign in </MenuItem>
-              <MenuItem onClick={handleClose} component={Link} to="/signup">Sign up</MenuItem>
+              <MenuItem onClick={handleClose}>Add story</MenuItem>
+              <MenuItem onClick={handleClose} component={Link} to="/signin">
+                Sign in{" "}
+              </MenuItem>
+              <MenuItem onClick={handleClose} component={Link} to="/signup">
+                Sign up
+              </MenuItem>
             </Menu>
           </div>
         </Toolbar>
       </AppBar>
-
-      
     </div>
   );
 }
