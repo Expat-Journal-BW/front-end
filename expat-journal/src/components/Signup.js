@@ -15,6 +15,7 @@ import Container from "@material-ui/core/Container";
 import Copyright from "./Copyright";
 import { useInput } from "../hooks/useInput";
 import { fakeAuth } from "../hooks/axiosWithAuth";
+import NavBar from "../components/NavBar"
 
 import "./componentStyles.css";
 
@@ -90,6 +91,9 @@ function SignUp(props) {
 	}
 
 	return (
+		<div>
+			< NavBar />
+		
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<div className={classes.paper}>
@@ -192,6 +196,8 @@ function SignUp(props) {
 				<Copyright linkText="Expat Journal" />
 			</Box>
 		</Container>
+
+		</div>
 	);
 }
 

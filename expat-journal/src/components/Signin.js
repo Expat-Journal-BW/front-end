@@ -15,6 +15,7 @@ import Container from "@material-ui/core/Container";
 import Copyright from "./Copyright";
 import { useInput } from "../hooks/useInput";
 import { fakeAuth } from "../hooks/axiosWithAuth";
+import NavBar from "../components/NavBar"
 
 import "./componentStyles.css";
 
@@ -98,7 +99,14 @@ function SignIn(props) {
 		return <Redirect to="/userdashboard" />;
 	}
 	return (
+
+		<div>
+		
+		<NavBar />
+		
+
 		<Container component="main" maxWidth="xs">
+			
 			<CssBaseline />
 			<div className={classes.paper}>
 				<Avatar className={classes.avatar}>
@@ -173,6 +181,7 @@ function SignIn(props) {
 				<Copyright linkText="Expat Journal" />
 			</Box>
 		</Container>
+		</div>
 	);
 }
 

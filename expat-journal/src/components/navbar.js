@@ -11,7 +11,7 @@ import Signin from "./Signin.js";
 import Signup from "./Signup"
 import {Link} from "react-router-dom";
 import {Route} from "react-router-dom";
-export default function NavBar() {
+const NavBar =() => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleMenu = event => {
@@ -59,3 +59,5 @@ export default function NavBar() {
     </div>
   );
 }
+
+export default NavBar;
