@@ -6,9 +6,7 @@ import Signup from "./components/Signup";
 import Signin from "./components/Signin";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./components/Dashboard";
-import NavBar from './components/navbar'
-
-
+import NavBar from "./components/navbar";
 import { connect } from "react-redux";
 import { SignUp, UpdateId } from "./actions/signUpActions";
 import { SetCurrentUser, RemoveCurrentUser } from "./actions/dashboardActions";
