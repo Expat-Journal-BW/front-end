@@ -14,7 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Copyright from "./Copyright";
 import { useInput } from "../hooks/useInput";
-import { fakeAuth } from "../hooks/axiosWithAuth";
+//import { fakeAuth } from "../hooks/axiosWithAuth";
 
 import "./componentStyles.css";
 
@@ -87,16 +87,16 @@ function SignIn(props) {
 		} else {
 			window.alert("Success!");
 			setTimeout(() => {
-				fakeAuth.authenticate();
+				//fakeAuth.authenticate();
 				props.SetCurrentUser(currUser);
 				setLoggedIn(true);
 			}, 1000);
 		}
 	};
 
-	if (fakeAuth.isAuthenticated) {
-		return <Redirect to="/userdashboard" />;
-	}
+	// if (fakeAuth.isAuthenticated) {
+	// 	return <Redirect to="/userdashboard" />;
+	// }
 	return (
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />

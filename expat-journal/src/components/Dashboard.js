@@ -14,7 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-import { fakeAuth } from "../hooks/axiosWithAuth";
+//import { fakeAuth } from "../hooks/axiosWithAuth";
 import Copyright from "./Copyright";
 import Stories from "./Stories";
 import AddStoryForm from "./AddStoryForm";
@@ -59,13 +59,13 @@ const Dashboard = (props) => {
 
 	const handleSignOut = (e) => {
 		e.preventDefault();
-		fakeAuth.signout(() => {
-			setTimeout(() => {
-				window.alert("Signed out!");
-				props.RemoveCurrentUser();
-				setLogout(true);
-			}, 500);
-		});
+		//fakeAuth.signout(() => {
+		setTimeout(() => {
+			window.alert("Signed out!");
+			props.RemoveCurrentUser();
+			setLogout(true);
+		}, 500);
+		//});
 	};
 
 	const add = (e) => {
@@ -88,9 +88,9 @@ const Dashboard = (props) => {
 		console.log("Dashboard props:", props);
 	}, []);
 
-	if (!fakeAuth.isAuthenticated) {
-		return <Redirect to="/signin" />;
-	}
+	// if (!fakeAuth.isAuthenticated) {
+	// 	return <Redirect to="/signin" />;
+	// }
 
 	if (adding) {
 		return (

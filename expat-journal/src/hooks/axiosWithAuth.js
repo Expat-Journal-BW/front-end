@@ -4,23 +4,12 @@ const axiosAuth = () => {
 	const token = localStorage.getItem("token");
 
 	return axios.create({
-		baseURL: "http://localhost:5000", //change later
+		baseURL: "https://expat-journalist.herokuapp.com", //change later
 		headers: {
 			Authorization: token,
+			"Content-Type": "application/json",
 		},
 	});
 };
 
 export default axiosAuth;
-
-export const fakeAuth = {
-	isAuthenticated: false,
-	authenticate(cb) {
-		this.isAuthenticated = true;
-		setTimeout(cb, 100);
-	},
-	signout(cb) {
-		this.isAuthenticated = false;
-		setTimeout(cb, 100);
-	},
-};

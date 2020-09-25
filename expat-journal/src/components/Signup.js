@@ -14,7 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Copyright from "./Copyright";
 import { useInput } from "../hooks/useInput";
-import { fakeAuth } from "../hooks/axiosWithAuth";
+//import { fakeAuth } from "../hooks/axiosWithAuth";
 
 import "./componentStyles.css";
 
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: theme.palette.secondary.main,
 	},
 	form: {
-		width: "100%", 
+		width: "100%",
 		marginTop: theme.spacing(3),
 	},
 	submit: {
@@ -50,14 +50,17 @@ function SignUp(props) {
 	const [password, setPassword, handlePassword] = useInput("");
 
 	const signUpDetails = {
-		id: props.nextUserId,
-		credentials: {
-			email: email,
-			password: password,
-		},
-		nameOfUser: {
-			firstName: firstName,
-			lastName: lastName,
+		user: {
+			id: props.nextUserId,
+			credentials: {
+				email: email,
+				password: password,
+			},
+			nameOfUser: {
+				firstName: firstName,
+				lastName: lastName,
+			},
+			posts: [],
 		},
 	};
 
@@ -77,7 +80,6 @@ function SignUp(props) {
 		} else {
 			clearInputs();
 			setTimeout(() => {
-				fakeAuth.authenticate();
 				props.SignUp(signUpDetails);
 				props.SetCurrentUser(signUpDetails);
 				props.UpdateId();
@@ -85,9 +87,9 @@ function SignUp(props) {
 		}
 	};
 
-	if (fakeAuth.isAuthenticated) {
-		return <Redirect to="/userdashboard" />;
-	}
+	// if () {
+	// 	return <Redirect to="/userdashboard" />;
+	// }
 
 	return (
 		<Container component="main" maxWidth="xs">
